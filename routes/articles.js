@@ -3,15 +3,15 @@
 import express from "express";
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.send("In articles")
-});
-
 router.get("/new", (req, res) => {
   res.render("articles/new.ejs")
 });
 
-router.post("/submit", (req, res) => {
+router.get("/edit", (req, res) => {
+  res.render("articles/edit.ejs")
+});
+
+router.post("/", (req, res) => {
 
   const articles = [
     {title: req.body["title"], createdAt:new Date(), description: req.body["description"]}
