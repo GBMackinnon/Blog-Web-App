@@ -14,7 +14,8 @@
 <div class ="container">
 <h1>New Article </h1>
 
-<form action="/articles/" method="POST">
+<!-- This determines the URL to direct to when the save button has been pressed -->
+<form action="/articles" method="POST">
     <%- include('_form_fields.ejs') %>
   <a href="/" class="btn btn-secondary mt-4"> Cancel</a>
   <button type="submit" class="btn btn-success mt-4"> Save</button>
