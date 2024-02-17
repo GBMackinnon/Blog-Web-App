@@ -36,10 +36,9 @@ const initializeRouter = (db, articles) => {
       } else {
         const insertedArticle = queryResult.rows[0];
         console.log("Inserted Article:", insertedArticle);
+        res.redirect("/");
       }
     });
-    
-    res.redirect("/");
     });
 
   router.put("/", (req, res) => {
@@ -47,6 +46,28 @@ const initializeRouter = (db, articles) => {
       { title: req.body["title"], createdAt: new Date(), description: req.body["description"] },
     ];
     res.render("articles/index.ejs", { articles: articles });
+  });
+
+
+
+  router.delete("/:id", async(req, res) => {
+    const articleId = req.params.id;
+
+    // SQL query to delete the article
+    const deleteQuery = `
+    Delete FROM articles 
+    WHERE id = $1`;
+
+        // Add article into the database
+    db.query(deleteQuery, [articleId], (err, queryResult) => {
+      if (err) {
+        console.error("Error executing query", err.stack);
+        return res.status(500).send("Internal Server Error");
+      } else {
+        console.log("Article Deleted");
+        res.status(200).json({ message: "Article successfully deleted" });
+      }
+    });   
   });
 
   return router;

@@ -30,7 +30,7 @@ let articles = [];
 
 function getAllArticles(callback){
   // Query the database and save in an array called articles
-  db.query("SELECT * FROM articles", (err, res) => {
+  db.query("SELECT * FROM articles ORDER BY id DESC", (err, res) => {
     if (err) {
       console.error("Error executing query", err.stack);
     } else {
@@ -45,6 +45,7 @@ app.use("/articles", articleRouter(db, articles));
 
 app.get("/", (req, res) => {
   // Call getAllArticles with a callback function
+  // Callback functions handling returned data (Ensures the database finishes getting al articles before displaying the index.js page)
   getAllArticles((updatedArticles) => {
     console.log(updatedArticles);
     res.render("articles/index.ejs", { articles: updatedArticles });
